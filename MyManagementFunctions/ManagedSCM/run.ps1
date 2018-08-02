@@ -41,33 +41,27 @@ Import-Module AzureRM.Profile
         isManualIntegration = "false" 
     }
     $vaultName = "vault4bxudj6xo65by"
+    $secretKey ="Gittoken"
     $apiversion = "2017-09-01"
-    $resourceURi = "https://vault.azure.net/"
+    $resourceURi = "https://vault.azure.net"
     $tokenAuthUri = "$env:MSI_EndPoint"+ "?resource=$resourceUri&api-version=$apiversion"
     $tokenResponse = invoke-RestMethod -method Get -Headers @{"Secret"="$env:MSI_Secret"} -uri $tokenAuthURI
     $vaultAccessToken = $tokenResponse.Access_Token
-
-    $headers = @{ 'Authorization' = "Bearer $vaultAccessToken" }
-    $queryUrl = "https://vault4bxudj6xo65by.vault.azure.net/secrets/Gittoken/ec176d5614794b25961f4578fb950304"
-
-    $queryUrl
-
-        $keyResponse = Invoke-RestMethod -Uri $queryUrl -Headers $headers
-
-    # Call the Vault and Retrieve Token   
-    $creds = Invoke-RestMethod -Method GET -Uri $vaultSecretURI -ContentType 'application/json' -Headers $Headers
+	
+     $headers= @{'Authorization'="Bearer $vaultAccessToken"}
+     $queryUrl="https://$vaultName.vault.azure.net/secrets/$secretKey"+'?api-version=2016-10-01'
+     $keyResponse= Invoke-RestMethod -Method GET -Uri $queryUrl -Headers $headers
+     $token = $($keyResponse.value)
 
     $resourceURi = "https://management.azure.com/"
     $tokenAuthUri = "$env:MSI_EndPoint"+ "?resource=$resourceUri&api-version=$apiversion"
     $tokenResponse = invoke-RestMethod -method Get -Headers @{"Secret"="$env:MSI_Secret"} -uri $tokenAuthURI
     $accessToken = $tokenResponse.Access_Token
-   
-    $token = $($creds.value)
 
-if($token) {
-
-# Use the access token to sign in under the MSI service principal
+    # Use the access token to sign in under the MSI service principal
     Login-AzureRmAccount -AccessToken $accesstoken  -Tenant $tenantId -AccountId "$env:MSI_Secret" -SubscriptionID $subid
+    
+if($token) {
 
     $PropertiesObject = @{
         token = "$token";
@@ -80,5 +74,3 @@ if($token) {
 } else {
     Out-File -Encoding Ascii -FilePath $res -inputObject "No Git Token found"
 }
-
-
