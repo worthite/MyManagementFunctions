@@ -26,8 +26,7 @@ namespace MyManagementFunctions.ManagedAppQueue
         public static void Run(string myQueueItem, TraceWriter log)
         {
 
-            string vaultname = ConfigurationManager.AppSettings["KeyVault"];
-            string StorageConnectionString = ConfigurationManager.AppSettings["KeyVault"];
+            string StorageConnectionString = ConfigurationManager.AppSettings["AzureWebJobsStorage"];
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(StorageConnectionString);
 
