@@ -3,10 +3,6 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Configuration;
 
-namespace MyManagementFunctions.ManagedAppQueue
-{
-    public static class ManagedAppQueue
-    {
 
         public static void Run(string myQueueItem, TraceWriter log)
         {
@@ -62,5 +58,4 @@ namespace MyManagementFunctions.ManagedAppQueue
             public string Repo { get; set; }
             public string Branch { get; set; }
         }
-    }
-}
+    
