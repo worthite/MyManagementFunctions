@@ -1,22 +1,7 @@
-using System;
-using System.Net;
-using System.Collections.Generic;
-using Microsoft.Azure;
-using Microsoft.Azure.Common;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.KeyVault.Models;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Queue;
-using Microsoft.WindowsAzure.Storage.Table;
-
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Azure.Services.AppAuthentication;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Configuration;
-using System.Linq;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
+using System.Configuration;
 
 namespace MyManagementFunctions.ManagedAppQueue
 {

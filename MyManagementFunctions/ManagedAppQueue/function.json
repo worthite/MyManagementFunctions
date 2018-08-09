@@ -5,7 +5,7 @@
       "type": "queueTrigger",
       "direction": "in",
       "queueName": "mymanagedapps",
-      "connection": "ManagementStorage"
+      "connection": "AzureWebJobsStorage"
     }
   ],
   "disabled": false
