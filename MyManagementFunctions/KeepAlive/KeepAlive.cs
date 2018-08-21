@@ -9,22 +9,17 @@ using Newtonsoft.Json;
 
 namespace MyManagementFunctions.Diagnostics
 {
-    public static class Monitoring
+    public static class KeepAlive
     {
-        [FunctionName("Diagnostics")]
+        [FunctionName("KeepAlive")]
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequest req, TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
+            string result = System.DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
 
-            string name = req.Query["name"];
-
-            string requestBody = new StreamReader(req.Body).ReadToEnd();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            return result != null
+                ? (ActionResult)new OkObjectResult($"{result}")
+                : new BadRequestObjectResult("Invalid Response Time");
         }
     }
 }
