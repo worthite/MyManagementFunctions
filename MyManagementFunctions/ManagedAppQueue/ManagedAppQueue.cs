@@ -21,7 +21,21 @@ namespace MyManagementFunctions.ManagedAppQueue
         {
             log.LogInformation($"C# Queue trigger function Started: {myQueueItem}");
 
-            log.LogInformation($"KeyVault: {KeyVault}");
+            var appSettings = ConfigurationManager.AppSettings;
+
+            if (appSettings.Count == 0)
+            {
+                log.LogInformation("AppSettings is empty.");
+            }
+            else
+            {
+                foreach (var key in appSettings.AllKeys)
+                {
+                    log.LogInformation("Key: {0} Value: {1}", key, appSettings[key]);
+                }
+            }
+
+
             log.LogInformation($"StorageConnectionString: {StorageConnectionString}");
 
             if (!string.IsNullOrEmpty(StorageConnectionString))
