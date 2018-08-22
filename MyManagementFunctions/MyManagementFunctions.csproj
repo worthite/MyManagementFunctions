@@ -34,9 +34,6 @@
     <None Update="ManagedSCM\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ManagedAppQueue\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="SQLConnection\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
