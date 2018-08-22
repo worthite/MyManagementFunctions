@@ -13,50 +13,55 @@ namespace MyManagementFunctions.ManagedAppQueue
 {
     public static class ManagedAppQueue
     {
-        static string StorageConnectionString = ConfigurationManager.AppSettings["AzureWebJobsStorage"];
+        internal static string StorageConnectionString = ConfigurationManager.AppSettings["AzureWebJobsStorage"];
 
         [FunctionName("ManagedAppQueue")]
         public static void Run([QueueTrigger("mymanagedapps", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
         {
             log.LogInformation($"C# Queue trigger function Started: {myQueueItem}");
-            
+
             log.LogInformation($"StorageConnectionString: {StorageConnectionString}");
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(StorageConnectionString);
+            if (!string.IsNullOrEmpty(StorageConnectionString))
+            {
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(StorageConnectionString);
 
-            // Create the queue client.
-            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+                // Create the queue client.
+                CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
-            // Retrieve a reference to a container.
-            CloudQueue queue = queueClient.GetQueueReference("sourcecontrolsetup");
+                // Retrieve a reference to a container.
+                CloudQueue queue = queueClient.GetQueueReference("sourcecontrolsetup");
 
-            // Create the queue if it doesn't already exist
-            queue.CreateIfNotExistsAsync();
+                // Create the queue if it doesn't already exist
+                queue.CreateIfNotExistsAsync();
 
-            // Create a message and add it to the queue.
-            CloudQueueMessage message = new Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage(myQueueItem);
-            queue.AddMessageAsync(message);
+                // Create a message and add it to the queue.
+                CloudQueueMessage message = new Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage(myQueueItem);
+                queue.AddMessageAsync(message);
 
-            // Create the table client.
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+                // Create the table client.
+                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 
-            // Retrieve a reference to the table.
-            CloudTable table = tableClient.GetTableReference("MyManagedApplications");
+                // Retrieve a reference to the table.
+                CloudTable table = tableClient.GetTableReference("MyManagedApplications");
 
-            // Create the table if it doesn't exist.
-            table.CreateIfNotExistsAsync();
+                // Create the table if it doesn't exist.
+                table.CreateIfNotExistsAsync();
 
-            //Source Control Setup           
-            MyMessage myRow = new MyMessage(myQueueItem);
+                //Source Control Setup           
+                MyMessage myRow = new MyMessage(myQueueItem);
 
-            // Create the TableOperation object that inserts the customer entity.
-            TableOperation insertOperation = TableOperation.Insert(myRow);
+                // Create the TableOperation object that inserts the customer entity.
+                TableOperation insertOperation = TableOperation.Insert(myRow);
 
-            // Execute the insert operation.
-            table.ExecuteAsync(insertOperation);
+                // Execute the insert operation.
+                table.ExecuteAsync(insertOperation);
 
-            log.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
-
+                log.LogInformation($"C# Queue trigger function processed: {myQueueItem}");
+            } else
+            {
+                log.LogInformation($"C# Queue trigger function Error: No Connection String Found.");
+            }
         }
 
         public class MyMessage : TableEntity
