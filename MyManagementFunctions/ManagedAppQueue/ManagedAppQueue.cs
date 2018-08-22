@@ -13,10 +13,10 @@ namespace MyManagementFunctions.ManagedAppQueue
 {
     public static class ManagedAppQueue
     {
-        internal static string StorageConnectionString = ConfigurationManager.AppSettings["ManagedAppQueueStorage"];
+        internal static string StorageConnectionString = ConfigurationManager.AppSettings["AzureWebJobsStorage"];
 
         [FunctionName("ManagedAppQueue")]
-        public static void Run([QueueTrigger("mymanagedapps", Connection = "ManagedAppQueueStorage")]string myQueueItem, ILogger log)
+        public static void Run([QueueTrigger("mymanagedapps", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
         {
             log.LogInformation($"C# Queue trigger function Started: {myQueueItem}");
 
