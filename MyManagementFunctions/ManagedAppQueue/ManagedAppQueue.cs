@@ -13,8 +13,8 @@ namespace MyManagementFunctions.ManagedAppQueue
 {
     public static class ManagedAppQueue
     {
-        internal static string StorageConnectionString = ConfigurationManager.AppSettings["connection"];
-        internal static string KeyVault = ConfigurationManager.AppSettings["name"];
+        internal static string StorageConnectionString = ConfigurationManager.AppSettings["AzureWebJobsStorage"];
+        internal static string KeyVault = ConfigurationManager.AppSettings["KeyVault"];
 
         [FunctionName("ManagedAppQueue")]
         public static void Run([QueueTrigger("mymanagedapps", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
