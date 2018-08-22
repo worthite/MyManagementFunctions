@@ -20,7 +20,7 @@ namespace MyManagementFunctions.ManagedAppQueue
 
             string StorageConnectionString = ConfigurationManager.AppSettings["AzureWebJobsStorage"];
 
-            log.LogInformation($"StorageConnectionString: {StorageConnectionString}");
+            log.LogInformation($"StorageConnectionString: {Connection}");
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(StorageConnectionString);
 
