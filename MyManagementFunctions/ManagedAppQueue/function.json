@@ -1,0 +1,25 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "mymanagedapps",
+      "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "queue",
+      "name": "outputQueueItem",
+      "queueName": "sourcecontrolsetup",
+      "connection": "AzureWebJobsStorage",
+      "direction": "out"
+    },
+    {
+      "type": "table",
+      "name": "outputTable",
+      "TableName": "MyManagedApplications",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "out"
+    }
+  ]
+}
