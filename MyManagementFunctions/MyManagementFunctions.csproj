@@ -4,10 +4,10 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="ManagedAppQueue\ManagedAppQueue.csx" />
+    <None Remove="ManagedAppQueue\run.csx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ManagedAppQueue\ManagedAppQueue.csx" />
+    <Compile Include="ManagedAppQueue\run.csx" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Common" Version="2.1.4" />
