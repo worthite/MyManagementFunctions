@@ -20,7 +20,7 @@ namespace MyManagementFunctions.ManagedAppQueue
         public static void Run([QueueTrigger("mymanagedapps", Connection = "AzureWebJobsStorage")]string myQueueItem, ILogger log)
         {
             log.LogInformation($"C# Queue trigger function Started: {myQueueItem}");
-
+            
             var appSettings = ConfigurationManager.AppSettings;
 
             if (appSettings.Count == 0)
