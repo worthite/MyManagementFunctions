@@ -1,6 +1,6 @@
 {
   "frameworks": {
-    "net46": {
+    "net461": {
       "dependencies": {
         "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.16.0.14",
         "Microsoft.IdentityModel.Logging": "1.0.0",
