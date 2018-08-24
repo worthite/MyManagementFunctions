@@ -42,6 +42,7 @@ Write-Output "PowerShell script processed queue message '$in'"
     $PropertiesObject = @{
         token = "$token";
     }
+
     Set-AzureRmResource -PropertyObject $PropertiesObject -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force
 
     Set-AzureRmResource -PropertyObject $Props -ResourceGroupName $AppServiceResourceGroupName -ResourceType Microsoft.Web/sites/sourcecontrols -ResourceName $AppServiceName/web -ApiVersion 2015-08-01 -Force
