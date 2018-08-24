@@ -1,7 +1,7 @@
 {
   "bindings": [
     {
-      "name": "SourceControlSetup",
+      "name": "triggerInput",
       "type": "queueTrigger",
       "direction": "in",
       "queueName": "sourcecontrolsetup",
